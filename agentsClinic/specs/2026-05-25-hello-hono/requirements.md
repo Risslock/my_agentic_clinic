@@ -2,12 +2,11 @@
 
 ## Scope
 
-Install and configure Hono with a `tsx` dev server. Expose a single `/` route that renders a minimal HTML home page via Hono JSX. Confirm TypeScript types work end-to-end.
+Install and configure Hono with a `tsx` dev server. Expose a single `/` route that renders a minimal HTML home page via Hono JSX. Confirm TypeScript types work end-to-end. The page must be responsive: readable on any viewport width from 320 px upward.
 
 ## Out of Scope
 
 - No navigation system or shared nav links (Phase 2)
-- No test framework setup (Vitest deferred to a later phase)
 - No database or additional routes
 - No CI/CD pipeline
 
@@ -21,6 +20,9 @@ Record the exact Hono version in `package.json` with no range prefix (e.g., `"ho
 
 ### Enforce strict TypeScript
 `tsconfig.json` must include `"strict": true`. This is non-negotiable from the first commit so the codebase never accumulates loose types.
+
+### Mobile-first responsive CSS
+`static/style.css` must be written mobile-first: base rules assume a narrow viewport, and `@media (min-width: 640px)` rules layer in larger-screen spacing and layout. No element may overflow the viewport horizontally on a 320 px wide screen. The `<meta name="viewport">` tag is required in the HTML shell.
 
 ## Context
 

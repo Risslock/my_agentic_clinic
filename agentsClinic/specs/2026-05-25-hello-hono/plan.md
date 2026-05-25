@@ -27,8 +27,8 @@
 
 12. Create `src/components/Layout.tsx` with a top-level shell (`<html>`, `<head>`, `<body>`)
 13. Create `src/components/Header.tsx`, `src/components/Main.tsx`, and `src/components/Footer.tsx` as separate files
-14. `<head>` links to `/static/style.css`
-15. Create `static/style.css` with minimal base styles
+14. `<head>` links to `/static/style.css` and includes `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
+15. Create `static/style.css` with mobile-first base styles: base rules target small screens, `@media (min-width: 640px)` rules add spacing and layout enhancements for larger viewports
 16. Serve the `static/` directory via `@hono/node-server/serve-static` in `src/index.tsx`
 17. Update `src/pages/Home.tsx` to use `<Layout>` and place page content inside `<Main>`
 
