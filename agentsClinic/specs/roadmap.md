@@ -4,7 +4,7 @@ Nano phases — each delivers 1-3 working features, completable in a day or less
 
 ---
 
-## Phase 1 — Project scaffold
+## Phase 1 — Project scaffold ✅
 - Initialize Next.js 14 with TypeScript and App Router
 - Configure Tailwind CSS
 - Add a root `page.tsx` that redirects to `/dashboard`

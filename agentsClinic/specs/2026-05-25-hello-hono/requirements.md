@@ -6,12 +6,15 @@ Install and configure Hono with a `tsx` dev server. Expose a single `/` route th
 
 ## Out of Scope
 
-- No shared layout or navigation system (Phase 2)
+- No navigation system or shared nav links (Phase 2)
 - No test framework setup (Vitest deferred to a later phase)
 - No database or additional routes
 - No CI/CD pipeline
 
 ## Decisions
+
+### Separate layout component files
+`Header`, `Main`, and `Footer` must each live in their own file (`src/components/Header.tsx`, `src/components/Main.tsx`, `src/components/Footer.tsx`). They are composed inside `src/components/Layout.tsx`. No component logic should be inlined directly into `Layout.tsx`.
 
 ### Pin Hono version
 Record the exact Hono version in `package.json` with no range prefix (e.g., `"hono": "4.x.y"`). Future phases must not silently upgrade without deliberate review.
