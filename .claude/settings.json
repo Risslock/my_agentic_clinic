@@ -4,7 +4,9 @@
       "Bash(npm run *)",
       "Bash(node -e \"const h = require\\('./node_modules/hono/dist/cjs/jsx/index.js'\\); console.log\\(Object.keys\\(h\\).slice\\(0,20\\)\\)\")",
       "Bash(node -e \"console.log\\(require.resolve\\('hono/jsx'\\)\\)\")",
-      "Bash(node -e \"const p = require\\('./node_modules/hono/package.json'\\); const exports = p.exports; const keys = Object.keys\\(exports\\).filter\\(k => k.includes\\('jsx'\\)\\); keys.forEach\\(k => console.log\\(k, JSON.stringify\\(exports[k]\\).slice\\(0,100\\)\\)\\)\")"
+      "Bash(node -e \"const p = require\\('./node_modules/hono/package.json'\\); const exports = p.exports; const keys = Object.keys\\(exports\\).filter\\(k => k.includes\\('jsx'\\)\\); keys.forEach\\(k => console.log\\(k, JSON.stringify\\(exports[k]\\).slice\\(0,100\\)\\)\\)\")",
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

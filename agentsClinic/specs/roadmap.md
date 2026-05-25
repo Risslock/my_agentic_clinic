@@ -59,11 +59,13 @@ Phases are intentionally focused — each one is a shippable slice of work, inde
 
 ---
 
-## Next: Phase 9 — API Hardening & Agent Self-Service
-- `POST /api/agents` — register a new agent programmatically
-- `POST /api/intake` — single-call pipeline (triage → diagnose → prescribe in one request)
-- `GET /api/agents` — list all agents
-- `GET /api/agents/:id` — get one agent with visit history summary
+## Next: Phase 9 — Visual Design & UI Templates
+- Custom theme and branding — color palette, typography, logo/favicon, design tokens
+- Reusable UI component library — shared `<Card>`, `<Badge>`, `<Button>`, `<Table>`, `<FormField>`, `<EmptyState>` components
+- SVG icon system with status/severity indicators for agents, ailments, and visits
+- Consistent card-based page templates for list, detail, and dashboard views
+- Enhanced visual states — empty states, error states, loading/skeleton patterns
+- Responsive refinement — hamburger nav, touch-friendly tables, custom breakpoints
 
 ---
 
