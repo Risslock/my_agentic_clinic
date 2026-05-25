@@ -3,10 +3,15 @@ import { app } from "./app";
 import { runMigrations } from "./db/migrate";
 
 if (!process.env.AGENTCLINIC_API_KEY) {
-  console.error(
-    "ERROR: AGENTCLINIC_API_KEY is not set. Set this environment variable before starting the server."
+  console.warn(
+    "WARN: AGENTCLINIC_API_KEY is not set. Running in demo mode — /api/* routes require no auth token."
   );
-  process.exit(1);
+}
+
+if (!process.env.ANTHROPIC_API_KEY) {
+  console.warn(
+    "WARN: ANTHROPIC_API_KEY is not set. LLM triage and prescription will return stub responses."
+  );
 }
 
 runMigrations();
