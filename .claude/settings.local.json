@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem \"c:\\\\Users\\\\juane\\\\Documents\\\\study\\\\spec-driven\\\\my_agentic_clinic\\\\agentsClinic\")"
+    ]
+  }
+}
