@@ -2,7 +2,7 @@ export type Agent = {
   id: string;
   name: string;
   model_type: string;
-  status: string;
+  status: "active" | "in-treatment" | "discharged";
   presenting_complaints: string | null;
 };
 
