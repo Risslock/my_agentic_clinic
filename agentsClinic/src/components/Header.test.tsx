@@ -48,4 +48,9 @@ describe("Header", () => {
     const html = await render(<Header />);
     expect(html).toContain('href="/dashboard"');
   });
+
+  it("renders nav icons", async () => {
+    const html = await render(<Header />);
+    expect(html).toContain("<svg");
+  });
 });

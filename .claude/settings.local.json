@@ -17,7 +17,14 @@
       "Bash(git merge replanning --no-ff -m ' *)",
       "Bash(git restore *)",
       "Bash(git branch *)",
-      "Bash(dir \"c:\\\\Users\\\\juane\\\\Documents\\\\study\\\\spec-driven\\\\my_agentic_clinic\" /b)"
+      "Bash(dir \"c:\\\\Users\\\\juane\\\\Documents\\\\study\\\\spec-driven\\\\my_agentic_clinic\" /b)",
+      "Bash(git merge *)",
+      "Bash(git stash *)",
+      "Bash(git -C \"c:/Users/juane/Documents/study/spec-driven/my_agentic_clinic\" status)",
+      "Bash(git -C \"c:/Users/juane/Documents/study/spec-driven/my_agentic_clinic\" log --oneline -5)",
+      "Bash(git -C c:/Users/juane/Documents/study/spec-driven/my_agentic_clinic add agentsClinic/package.json agentsClinic/package-lock.json agentsClinic/.env.example agentsClinic/static/style.css agentsClinic/src/db/types.ts agentsClinic/src/db/seed.ts agentsClinic/src/db/visits.ts agentsClinic/src/db/appointments.ts agentsClinic/src/db/dashboard.ts agentsClinic/src/db/migrations/004_therapies.sql agentsClinic/src/db/migrations/005_ailment_therapies.sql agentsClinic/src/db/migrations/006_visits.sql agentsClinic/src/db/migrations/007_appointments.sql agentsClinic/src/llm/triage.ts agentsClinic/src/llm/prescribe.ts agentsClinic/src/middleware/auth.ts agentsClinic/src/components/Header.tsx agentsClinic/src/components/Header.test.tsx agentsClinic/src/pages/AgentDetail.tsx agentsClinic/src/pages/AilmentsList.tsx agentsClinic/src/pages/AilmentDetail.tsx agentsClinic/src/pages/TherapiesList.tsx agentsClinic/src/pages/AppointmentsList.tsx agentsClinic/src/pages/AppointmentConfirmation.tsx agentsClinic/src/pages/Dashboard.tsx agentsClinic/src/pages/therapies.test.tsx agentsClinic/src/pages/appointments.test.tsx agentsClinic/src/pages/dashboard.test.tsx agentsClinic/src/api/api.test.tsx agentsClinic/src/app.tsx agentsClinic/src/index.tsx agentsClinic/specs/2026-05-25-therapies/ agentsClinic/specs/2026-05-25-llm-triage/ agentsClinic/specs/2026-05-25-appointments/ agentsClinic/specs/2026-05-25-dashboard/ agentsClinic/specs/2026-05-25-polish-hardening/)",
+      "Bash(git -C c:/Users/juane/Documents/study/spec-driven/my_agentic_clinic commit -m ' *)",
+      "Bash(git -C \"c:/Users/juane/Documents/study/spec-driven/my_agentic_clinic\" log --format=\"%ad|||%s\" --date=short)"
     ],
     "additionalDirectories": [
       "c:\\Users\\juane\\Documents\\study\\spec-driven\\my_agentic_clinic\\.claude"

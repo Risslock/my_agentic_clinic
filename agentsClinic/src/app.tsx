@@ -13,7 +13,8 @@ import { Dashboard } from "./pages/Dashboard";
 import { Layout } from "./components/Layout";
 import { authMiddleware } from "./middleware/auth";
 import { db } from "./db/database";
-import { createVisit, getVisit, updateVisit } from "./db/visits";
+import { createVisit, getVisit, getVisitsByAgent, getVisitWithAilments, updateVisit } from "./db/visits";
+import { VisitDetail } from "./pages/VisitDetail";
 import { createAppointment, getAppointment, listAppointments } from "./db/appointments";
 import { getDashboardCounts, getDashboardAgents, getDashboardAppointments } from "./db/dashboard";
 import { triageVisit } from "./llm/triage";
@@ -50,7 +51,9 @@ app.get("/agents/:id", (c) => {
     )
     .all(agent.id) as Pick<Ailment, "id" | "name">[];
 
-  return c.html(<AgentDetail agent={agent} ailments={ailments} />);
+  const visits = getVisitsByAgent(agent.id);
+
+  return c.html(<AgentDetail agent={agent} ailments={ailments} visits={visits} />);
 });
 
 app.get("/ailments", (c) => {
@@ -82,6 +85,14 @@ app.get("/therapies", (c) => {
     .prepare("SELECT id, name, description, instructions FROM therapies ORDER BY name")
     .all() as Therapy[];
   return c.html(<TherapiesList therapies={therapies} />);
+});
+
+app.get("/visits/:id", (c) => {
+  const visit = getVisitWithAilments(c.req.param("id"));
+  if (!visit) return c.notFound();
+  return c.html(
+    <VisitDetail visit={visit} diagnosedAilments={visit.diagnosed_ailments} />
+  );
 });
 
 app.get("/appointments", (c) => {

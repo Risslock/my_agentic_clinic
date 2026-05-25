@@ -2,18 +2,31 @@ import Anthropic from "@anthropic-ai/sdk";
 import { db } from "../db/database";
 import type { Ailment } from "../db/types";
 
-const client = new Anthropic();
-
 export type TriageResult = {
   severity: "low" | "medium" | "high" | "critical";
   candidate_ailment_ids: string[];
   rationale: string;
 };
 
+function stubTriage(): TriageResult {
+  // Pick the first available ailment so the diagnose step can proceed in demo mode
+  const first = db.prepare("SELECT id FROM ailments LIMIT 1").get() as { id: string } | undefined;
+  return {
+    severity: "medium",
+    candidate_ailment_ids: first ? [first.id] : [],
+    rationale:
+      "[Demo mode] Real triage is disabled. Set ANTHROPIC_API_KEY to enable AI-powered triage.",
+  };
+}
+
 export async function triageVisit(
   agentContext: string,
   symptoms: string
 ): Promise<TriageResult> {
+  if (!process.env.ANTHROPIC_API_KEY) return stubTriage();
+
+  const client = new Anthropic();
+
   const ailments = db
     .prepare("SELECT id, name, description FROM ailments ORDER BY name")
     .all() as Ailment[];

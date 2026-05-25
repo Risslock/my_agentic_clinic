@@ -2,6 +2,14 @@
 
 ## 2026-05-25
 
+- implement MVP: Therapies, LLM Triage, Appointments, Dashboard, Polish & Hardening
+- implement Phase 2: Agents & Ailments with PicoCSS
+- implement Phase 9 visual design: shared UI components, theme tokens, favicon, and page refactors
+- align Phase 9 tests with the new card-based UI and confirm the suite is green
+- Refactor CSS: Remove redundant styles and simplify layout overrides
+- add Phase 2 spec: Agents & Ailments with PicoCSS
+- replanning of roadmap
+- add changelog skill and bootstrap CHANGELOG.md
 - add mobile first features
 - update specs: separate component files requirement and mark Phase 1 complete
 - first feature implementation
