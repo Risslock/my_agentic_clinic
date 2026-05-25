@@ -1,6 +1,22 @@
 import type { FC } from "hono/jsx";
-import type { Ailment, Visit } from "../db/types";
+import { Badge } from "../components/Badge";
+import { Button } from "../components/Button";
+import { Card } from "../components/Card";
+import { EmptyState } from "../components/EmptyState";
+import {
+  IconAlertTriangle,
+  IconAppointment,
+  IconArrowLeft,
+  IconAilment,
+  IconCheck,
+  IconDashboard,
+  IconSeverityCritical,
+  IconSeverityHigh,
+  IconSeverityLow,
+  IconSeverityMedium,
+} from "../components/Icons";
 import { Layout } from "../components/Layout";
+import type { Ailment, Visit } from "../db/types";
 
 type TriageOutput = {
   severity: string;
@@ -25,13 +41,29 @@ export type VisitDetailProps = {
   diagnosedAilments: Pick<Ailment, "id" | "name">[];
 };
 
+const severityIcon = (severity: string) => {
+  if (severity === "critical") return IconSeverityCritical;
+  if (severity === "high") return IconSeverityHigh;
+  if (severity === "medium") return IconSeverityMedium;
+  return IconSeverityLow;
+};
+
+const severityVariant = (severity: string) => {
+  if (severity === "critical") return "danger";
+  if (severity === "high") return "danger";
+  if (severity === "medium") return "warning";
+  return "info";
+};
+
 export const VisitDetail: FC<VisitDetailProps> = ({ visit, diagnosedAilments }) => {
   let triage: TriageOutput | null = null;
   let prescription: Prescription | null = null;
 
   try {
     if (visit.triage_output) triage = JSON.parse(visit.triage_output) as TriageOutput;
-  } catch { /* malformed — show pending */ }
+  } catch {
+    // malformed — show pending
+  }
 
   try {
     if (visit.prescription) {
@@ -40,72 +72,93 @@ export const VisitDetail: FC<VisitDetailProps> = ({ visit, diagnosedAilments }) 
         (a, b) => a.priority - b.priority
       );
     }
-  } catch { /* malformed — show pending */ }
+  } catch {
+    // malformed — show pending
+  }
 
   return (
     <Layout>
       <h1>Visit Record</h1>
-      <p>
-        <strong>Status:</strong> {visit.status}&ensp;
-        <strong>Date:</strong> {new Date(visit.created_at).toLocaleString()}
-      </p>
+      <Card title="Visit overview" icon={IconDashboard}>
+        <p>
+          <strong>Status:</strong> <Badge text={visit.status} variant={visit.status === "open" ? "warning" : "info"} />
+        </p>
+        <p>
+          <strong>Date:</strong> {new Date(visit.created_at).toLocaleString()}
+        </p>
+        <div class="page-actions">
+          <Button href={`/agents/${visit.agent_id}`} icon={IconArrowLeft} variant="secondary">
+            Back to agent
+          </Button>
+        </div>
+      </Card>
 
-      <section>
-        <h2>Submitted Symptoms</h2>
-        <blockquote>{visit.symptoms}</blockquote>
-      </section>
+      <div class="section-grid">
+        <Card title="Submitted symptoms" icon={IconAppointment}>
+          <blockquote>{visit.symptoms}</blockquote>
+        </Card>
 
-      <section>
-        <h2>Triage</h2>
-        {triage ? (
-          <>
-            <p>
-              <strong>Severity:</strong> <mark>{triage.severity.toUpperCase()}</mark>
-            </p>
-            <p>{triage.rationale}</p>
-          </>
-        ) : (
-          <p><em>Pending triage.</em></p>
-        )}
-      </section>
+        <Card title="Triage" icon={IconDashboard}>
+          {triage ? (
+            <>
+              <p>
+                <strong>Severity:</strong>{" "}
+                <Badge
+                  text={triage.severity.toUpperCase()}
+                  variant={severityVariant(triage.severity)}
+                  icon={severityIcon(triage.severity)}
+                />
+              </p>
+              <p>{triage.rationale}</p>
+            </>
+          ) : (
+            <>
+              <div class="skeleton-line" style="width: 12rem;" />
+              <p>Pending triage.</p>
+            </>
+          )}
+        </Card>
 
-      <section>
-        <h2>Diagnosis</h2>
-        {diagnosedAilments.length > 0 ? (
-          <ul>
-            {diagnosedAilments.map((a) => (
-              <li key={a.id}>
-                <a href={`/ailments/${a.id}`}>{a.name}</a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p><em>Pending diagnosis.</em></p>
-        )}
-      </section>
-
-      <section>
-        <h2>Prescription</h2>
-        {prescription ? (
-          <>
-            <ol>
-              {prescription.prescribed_therapies.map((t) => (
-                <li key={t.therapy_id}>
-                  <strong>{t.therapy_name}</strong>
-                  <p>{t.instructions}</p>
+        <Card title="Diagnosis" icon={IconAilment}>
+          {diagnosedAilments.length > 0 ? (
+            <ul>
+              {diagnosedAilments.map((ailment) => (
+                <li key={ailment.id}>
+                  <a href={`/ailments/${ailment.id}`}>{ailment.name}</a>
                 </li>
               ))}
-            </ol>
-            <blockquote>{prescription.rationale}</blockquote>
-          </>
-        ) : (
-          <p><em>Pending prescription.</em></p>
-        )}
-      </section>
+            </ul>
+          ) : (
+            <EmptyState
+              heading="Pending diagnosis"
+              description="The diagnosis phase has not been completed yet."
+              icon={IconAlertTriangle}
+            />
+          )}
+        </Card>
 
-      <p>
-        <a href={`/agents/${visit.agent_id}`}>← Back to agent</a>
-      </p>
+        <Card title="Prescription" icon={IconCheck}>
+          {prescription ? (
+            <>
+              <ol>
+                {prescription.prescribed_therapies.map((therapy) => (
+                  <li key={therapy.therapy_id}>
+                    <strong>{therapy.therapy_name}</strong>
+                    <p>{therapy.instructions}</p>
+                  </li>
+                ))}
+              </ol>
+              <blockquote>{prescription.rationale}</blockquote>
+            </>
+          ) : (
+            <EmptyState
+              heading="Pending prescription"
+              description="The prescription step is still waiting for triage and diagnosis."
+              icon={IconAlertTriangle}
+            />
+          )}
+        </Card>
+      </div>
     </Layout>
   );
 };
