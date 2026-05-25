@@ -13,6 +13,7 @@
     "postinstall": "node -e \"require('fs').copyFileSync('node_modules/@picocss/pico/css/pico.min.css', 'static/pico.min.css')\""
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.98.0",
     "@hono/node-server": "1.19.12",
     "@picocss/pico": "^2.1.1",
     "better-sqlite3": "^12.10.0",

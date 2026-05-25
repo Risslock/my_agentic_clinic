@@ -33,4 +33,19 @@ describe("Header", () => {
     const html = await render(<Header />);
     expect(html).toContain('href="/ailments"');
   });
+
+  it("has a link to /therapies", async () => {
+    const html = await render(<Header />);
+    expect(html).toContain('href="/therapies"');
+  });
+
+  it("has a link to /appointments", async () => {
+    const html = await render(<Header />);
+    expect(html).toContain('href="/appointments"');
+  });
+
+  it("has a link to /dashboard", async () => {
+    const html = await render(<Header />);
+    expect(html).toContain('href="/dashboard"');
+  });
 });
