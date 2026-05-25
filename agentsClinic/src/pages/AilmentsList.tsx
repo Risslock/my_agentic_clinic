@@ -12,7 +12,9 @@ export const AilmentsList: FC<AilmentsListProps> = ({ ailments }) => (
       {ailments.map((a) => (
         <Fragment key={a.id}>
           <dt>
-            <strong>{a.name}</strong>
+            <a href={`/ailments/${a.id}`}>
+              <strong>{a.name}</strong>
+            </a>
           </dt>
           <dd>{a.description}</dd>
         </Fragment>

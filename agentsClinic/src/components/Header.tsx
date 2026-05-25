@@ -7,6 +7,9 @@ export const Header: FC = () => (
       <ul>
         <li><a href="/agents">Agents</a></li>
         <li><a href="/ailments">Ailments</a></li>
+        <li><a href="/therapies">Therapies</a></li>
+        <li><a href="/appointments">Appointments</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
       </ul>
     </nav>
   </header>
