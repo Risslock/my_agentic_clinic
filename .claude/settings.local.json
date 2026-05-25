@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(Get-ChildItem \"c:\\\\Users\\\\juane\\\\Documents\\\\study\\\\spec-driven\\\\my_agentic_clinic\\\\agentsClinic\")"
+      "Bash(Get-ChildItem \"c:\\\\Users\\\\juane\\\\Documents\\\\study\\\\spec-driven\\\\my_agentic_clinic\\\\agentsClinic\")",
+      "Bash(npm install *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(curl -s http://localhost:3000/static/style.css)",
+      "Bash(pkill -f \"tsx watch src/index.tsx\")"
     ]
   }
 }
