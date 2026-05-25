@@ -8,13 +8,20 @@
     "dev": "tsx watch src/index.tsx",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "seed": "tsx src/db/seed.ts",
+    "postinstall": "node -e \"require('fs').copyFileSync('node_modules/@picocss/pico/css/pico.min.css', 'static/pico.min.css')\""
   },
   "dependencies": {
     "@hono/node-server": "1.19.12",
-    "hono": "4.12.9"
+    "@picocss/pico": "^2.1.1",
+    "better-sqlite3": "^12.10.0",
+    "hono": "4.12.9",
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/uuid": "^10.0.0",
     "tsx": "4.21.0",
     "typescript": "^5.5.3",
     "vitest": "^4.1.7"

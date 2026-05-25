@@ -18,4 +18,19 @@ describe("Header", () => {
     expect(html).toContain("<header>");
     expect(html).toContain("</header>");
   });
+
+  it("renders a <nav> element", async () => {
+    const html = await render(<Header />);
+    expect(html).toContain("<nav>");
+  });
+
+  it("has a link to /agents", async () => {
+    const html = await render(<Header />);
+    expect(html).toContain('href="/agents"');
+  });
+
+  it("has a link to /ailments", async () => {
+    const html = await render(<Header />);
+    expect(html).toContain('href="/ailments"');
+  });
 });
