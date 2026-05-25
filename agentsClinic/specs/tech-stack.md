@@ -20,10 +20,11 @@ Both live in the same project, share the same types, and deploy as a single unit
 | Database | SQLite via `better-sqlite3` | Zero-config, file-based, sufficient for MVP scale |
 | ORM | Drizzle ORM | Type-safe SQL with schema-as-code and SQLite support |
 | LLM | Anthropic SDK (`@anthropic-ai/sdk`) | Powers triage and diagnosis |
-| Styling | Tailwind CSS | Utility-first; built into Next.js ecosystem |
+| Styling | Custom CSS (mobile-first) | Hand-written responsive stylesheet; no build-step dependency; breakpoints via `@media` queries |
 | Charts | Recharts | React-native charts for the analytics dashboard |
 | IDs | `uuid` | UUID v4 for patient and visit IDs |
 | Real-time | Server-Sent Events (native `ReadableStream`) | Live dashboard updates without WebSocket infrastructure |
+| Testing | Vitest | Fast unit/integration tests for spec validation; native TypeScript support without extra config |
 
 ## Key decisions
 
@@ -32,3 +33,5 @@ Both live in the same project, share the same types, and deploy as a single unit
 **Single API key auth (MVP):** `AGENTCLINIC_API_KEY` env var. All `/api/*` routes validate a Bearer token. Dashboard is unprotected — assumes private deployment. Multi-tenant auth is post-MVP.
 
 **Two LLM calls per visit:** One for triage + diagnosis, one for prescription + rationale. Separating them keeps each prompt focused and lets deterministic treatment-ranking logic run between the two calls.
+
+**Responsive design (mobile-first):** All UI surfaces — scaffold pages and dashboard — must render correctly at any viewport width. CSS is written mobile-first: base rules target small screens, `@media (min-width: 640px)` rules enhance for tablet and desktop. The `<meta name="viewport">` tag is required in every HTML document shell.

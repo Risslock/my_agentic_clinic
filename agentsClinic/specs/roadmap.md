@@ -9,6 +9,7 @@ Nano phases — each delivers 1-3 working features, completable in a day or less
 - Configure Tailwind CSS
 - Add a root `page.tsx` that redirects to `/dashboard`
 - Add a placeholder `/dashboard` page: "AgentClinic — 0 patients, 0 visits"
+- All pages use mobile-first responsive CSS; `<meta name="viewport">` present in every HTML shell
 
 ## Phase 2 — Database schema + seed
 - Install `better-sqlite3`, `drizzle-orm`, `drizzle-kit`, `uuid`
@@ -65,14 +66,17 @@ Nano phases — each delivers 1-3 working features, completable in a day or less
 - Stat cards: active patients, open visits, resolution rate
 - Ailment distribution bar chart, severity donut chart (Recharts)
 - Recent visits table (last 20, click to patient detail)
+- Stat cards stack vertically on mobile, flow to a multi-column grid on wider viewports
 
 ## Phase 13 — Patient directory + detail pages
 - `/dashboard/patients` — searchable, filterable patient list with chronic condition badges
 - `/dashboard/patients/[id]` — patient detail: header, visit timeline, treatment history panel
+- Patient list and detail panels reflow to single-column on narrow viewports
 
 ## Phase 14 — Ailment analytics + alerts pages
 - `/dashboard/ailments` — trending chart, heatmap, effectiveness table, custom ailment review queue
 - `/dashboard/alerts` — referral queue and chronic condition alert cards
+- Charts and tables scroll horizontally on small screens rather than overflowing the viewport
 
 ## Phase 15 — SSE real-time updates
 - `GET /api/events` — Server-Sent Events endpoint

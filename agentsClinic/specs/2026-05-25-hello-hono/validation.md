@@ -39,8 +39,30 @@ HTTP status must be `200 OK`. Response body must be HTML and must contain:
 
 `tsconfig.json` must contain `"strict": true`.
 
+### 6. Responsive design baseline
+
+The HTML shell must include:
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+
+`static/style.css` must contain at least one `@media (min-width: 640px)` block. No element may cause horizontal overflow on a 320 px viewport (verify by resizing the browser or running DevTools device emulation).
+
+### 7. Tests pass
+
+```
+npm test
+```
+
+Must exit with code 0. Tests cover:
+
+- `GET /` returns HTTP 200
+- Response `Content-Type` contains `text/html`
+- Response body contains `<h1>AgentClinic</h1>`
+- Response body contains the tagline
+
 ## Not Required
 
-- No automated tests needed for this phase
 - No CI pipeline required
 - Browser rendering not checked (curl is sufficient)
