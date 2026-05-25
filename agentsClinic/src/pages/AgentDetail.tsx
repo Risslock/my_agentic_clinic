@@ -1,5 +1,5 @@
 import type { FC } from "hono/jsx";
-import type { Agent, Ailment } from "../db/types";
+import type { Agent, Ailment, Visit } from "../db/types";
 import { Layout } from "../components/Layout";
 
 type FormErrors = {
@@ -17,6 +17,7 @@ type FormData = {
 export type AgentDetailProps = {
   agent: Agent;
   ailments: Pick<Ailment, "id" | "name">[];
+  visits?: Visit[];
   errors?: FormErrors;
   formData?: FormData;
 };
@@ -24,6 +25,7 @@ export type AgentDetailProps = {
 export const AgentDetail: FC<AgentDetailProps> = ({
   agent,
   ailments,
+  visits = [],
   errors,
   formData,
 }) => (
@@ -107,5 +109,35 @@ export const AgentDetail: FC<AgentDetailProps> = ({
 
       <button type="submit">Book Appointment</button>
     </form>
+
+    <h2>Visit History</h2>
+    {visits.length === 0 ? (
+      <p>No visits on record.</p>
+    ) : (
+      <div style="overflow-x: auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Severity</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {visits.map((v) => (
+              <tr key={v.id}>
+                <td>{new Date(v.created_at).toLocaleString()}</td>
+                <td>{v.status}</td>
+                <td>{v.severity ?? "—"}</td>
+                <td>
+                  <a href={`/visits/${v.id}`}>View</a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
   </Layout>
 );

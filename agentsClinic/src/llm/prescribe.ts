@@ -2,8 +2,6 @@ import Anthropic from "@anthropic-ai/sdk";
 import { db } from "../db/database";
 import type { Therapy } from "../db/types";
 
-const client = new Anthropic();
-
 export type PrescribedTherapy = {
   therapy_id: string;
   therapy_name: string;
@@ -16,13 +14,49 @@ export type PrescriptionResult = {
   rationale: string;
 };
 
+function stubPrescription(ailmentIds: string[]): PrescriptionResult {
+  // Return the first therapy mapped to any of the diagnosed ailments
+  const placeholders = ailmentIds.map(() => "?").join(",");
+  const therapy =
+    ailmentIds.length > 0
+      ? (db
+          .prepare(
+            `SELECT DISTINCT t.id, t.name, t.description, t.instructions
+             FROM therapies t
+             JOIN ailment_therapies at2 ON at2.therapy_id = t.id
+             WHERE at2.ailment_id IN (${placeholders})
+             ORDER BY t.name LIMIT 1`
+          )
+          .get(...ailmentIds) as Therapy | undefined)
+      : undefined;
+
+  return {
+    prescribed_therapies: therapy
+      ? [
+          {
+            therapy_id: therapy.id,
+            therapy_name: therapy.name,
+            instructions: therapy.instructions ?? "Standard protocol.",
+            priority: 1,
+          },
+        ]
+      : [],
+    rationale:
+      "[Demo mode] Real prescription is disabled. Set ANTHROPIC_API_KEY to enable AI-powered prescriptions.",
+  };
+}
+
 export async function prescribeForVisit(
   diagnosisAilmentIds: string[],
   agentContext: string
 ): Promise<PrescriptionResult> {
+  if (!process.env.ANTHROPIC_API_KEY) return stubPrescription(diagnosisAilmentIds);
+
   if (diagnosisAilmentIds.length === 0) {
     return { prescribed_therapies: [], rationale: "No ailments diagnosed." };
   }
+
+  const client = new Anthropic();
 
   const placeholders = diagnosisAilmentIds.map(() => "?").join(",");
   const therapies = db
